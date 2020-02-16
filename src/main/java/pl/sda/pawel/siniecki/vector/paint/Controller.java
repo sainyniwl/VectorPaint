@@ -34,12 +34,12 @@ public class Controller {
 
     private Shape currentShape;
     private Tool currentTool = Tool.LINE;
-    
+
 
     public void initialize() {
 
-        /*strokeColorPicker.setValue(Color.BLACK);
-        fillColorPicker.setValue(Color.BLACK);*/
+        strokeColorPicker.setValue(Color.BLACK);
+        fillColorPicker.setValue(Color.BLACK);
 
         refreshCanvas();
 
@@ -81,7 +81,21 @@ public class Controller {
     }
 
     private void prepareShape() {
-        currentShape = new Line(startX, startY, endX, endY);
+        currentShape = createShape();
+        currentShape.setStrokeColor(strokeColorPicker.getValue());
+        currentShape.setFillColor(fillColorPicker.getValue());
+    }
+
+    private Shape createShape() {
+        switch (currentTool) {
+            default:
+            case LINE :
+                return new Line(startX, startY, endX, endY);
+            case RECTANGLE:
+                return new Rectangle(startX, startY, endX, endY);
+            case TRIANGLE:
+                return new Triangle(startX, startY, endX, endY);
+        }
     }
 
     private void refreshCanvas() {
@@ -96,7 +110,24 @@ public class Controller {
         }
     }
 
+    @FXML
     public void changeTool(ActionEvent actionEvent) {
-
+        Object source = actionEvent.getSource();
+        if (source == lineTool) {
+            currentTool = Tool.LINE;
+        } else if (source == rectTool) {
+            currentTool = Tool.RECTANGLE;
+        } else if (source == triangleTool) {
+            currentTool = Tool.TRIANGLE;
+        } else if (source == circleTool) {
+            currentTool = Tool.CIRCLE;
+        } else if (source == ellipseTool) {
+            currentTool = Tool.ELLIPSE;
+        } else if (source == starTool) {
+            currentTool = Tool.STAR;
+        } else {
+            throw new IllegalStateException("Unsupported Tool");
+        }
+        System.out.println(currentTool);
     }
 }
