@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <BorderPane prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <left>
+            <VBox prefHeight="520.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="lineTool" mnemonicParsing="false" prefHeight="50.0" prefWidth="107.0" text="Line" />
+                  <Button fx:id="rectTool" mnemonicParsing="false" prefHeight="50.0" prefWidth="126.0" text="Rectangle" />
+                  <Button fx:id="triangleTool" mnemonicParsing="false" prefHeight="50.0" prefWidth="112.0" text="Triangle" />
+                  <Button fx:id="circleTool" mnemonicParsing="false" prefHeight="50.0" prefWidth="119.0" text="Circle" />
+                  <Button fx:id="eclipseTool" mnemonicParsing="false" prefHeight="50.0" prefWidth="114.0" text="Elipse" />
+                  <Button fx:id="starTool" mnemonicParsing="false" prefHeight="50.0" prefWidth="112.0" text="Star" />
+               </children>
+            </VBox>
+         </left>
+         <center>
+            <Canvas fx:id="canvas" height="493.0" width="676.0" />
+         </center>
+         <top>
+            <HBox prefHeight="40.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button alignment="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="268.0" text="Clear" />
+                  <Button alignment="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="266.0" text="Load" />
+                  <Button alignment="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="266.0" text="Save" />
+               </children>
+            </HBox>
+         </top>
+         <bottom>
+            <HBox prefHeight="40.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label alignment="CENTER" prefHeight="40.0" prefWidth="97.0" text="Fill Color">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+                  <ColorPicker fx:id="fillColorPicker" prefHeight="43.0" prefWidth="135.0" />
+                  <Label alignment="CENTER" prefHeight="46.0" prefWidth="144.0" text="Stroke Color" textAlignment="CENTER">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </Label>
+                  <ColorPicker fx:id="strokeColorPicker" prefHeight="44.0" prefWidth="135.0" />
+               </children>
+            </HBox>
+         </bottom>
+      </BorderPane>
+   </children>
+</AnchorPane>
