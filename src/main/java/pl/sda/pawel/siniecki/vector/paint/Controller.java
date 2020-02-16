@@ -1,5 +1,6 @@
 package pl.sda.pawel.siniecki.vector.paint;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -8,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import pl.sda.pawel.siniecki.vector.paint.shapes.*;
 
 public class Controller {
 
@@ -20,6 +22,9 @@ public class Controller {
     @FXML public Button starTool;
     @FXML public Button ellipseTool;
     @FXML public Canvas canvas;
+    @FXML public Button clear;
+    @FXML public Button load;
+    @FXML public Button save;
 
     private double startX;
     private double startY;
@@ -27,9 +32,24 @@ public class Controller {
     private double endX;
     private double endY;
 
+    private Shape currentShape;
+    private Tool currentTool = Tool.LINE;
+    
 
     public void initialize() {
+
+        /*strokeColorPicker.setValue(Color.BLACK);
+        fillColorPicker.setValue(Color.BLACK);*/
+
         refreshCanvas();
+
+        clear.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent actionEvent) {
+                GraphicsContext context = canvas.getGraphicsContext2D();
+                context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                context.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            }
+        });
 
         canvas.setOnMousePressed(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent mouseEvent) {
@@ -44,6 +64,7 @@ public class Controller {
                 endX = mouseEvent.getX();
                 endY = mouseEvent.getY();
                 System.out.printf("Released x=%f y=%f \n", endX, endY);
+                prepareShape();
                 refreshCanvas();
             }
         });
@@ -53,15 +74,29 @@ public class Controller {
                 endX = mouseEvent.getX();
                 endY = mouseEvent.getY();
                 System.out.printf("Dragged x=%f y=%f \n", endX, endY);
+                prepareShape();
                 refreshCanvas();
             }
         });
     }
 
+    private void prepareShape() {
+        currentShape = new Line(startX, startY, endX, endY);
+    }
+
     private void refreshCanvas() {
         GraphicsContext context = canvas.getGraphicsContext2D();
+
+        context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         context.setStroke(Color.BLACK);
         context.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        context.strokeLine(startX, startY, endX, endY);
+
+        if (currentShape != null) {
+            currentShape.draw(context);
+        }
+    }
+
+    public void changeTool(ActionEvent actionEvent) {
+
     }
 }
