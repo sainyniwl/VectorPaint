@@ -17,6 +17,15 @@ public class Line extends Shape {
         this.y2 = y2;
     }
 
+    public Line(Builder builder) {
+        this.x1 = builder.x1;
+        this.y1 = builder.y1;
+        this.x2 = builder.x2;
+        this.y2 = builder.y2;
+        setFillColor(builder.fillColor);
+        setStrokeColor(builder.strokeColor);
+    }
+
     public void draw(GraphicsContext context) {
         context.strokeLine(x1, y1, x2, y2);
     }
@@ -27,7 +36,7 @@ public class Line extends Shape {
         builder.append(x1).append(";");
         builder.append(y1).append(";");
         builder.append(x2).append(";");
-        builder.append(x2).append(";");
+        builder.append(y2).append(";");
         builder.append(getFillColor()).append(";");
         builder.append(getStrokeColor()).append(";");
         return builder.toString();
@@ -67,8 +76,15 @@ public class Line extends Shape {
 
     public static class Builder {
 
+        double x1;
+        double y1;
+        double x2;
+        double y2;
+        Color fillColor;
+        Color strokeColor;
+
         public Line build() {
-            return Line(this);
+            return new Line(this);
         }
 
         public Builder setX1(double x1) {
@@ -100,12 +116,5 @@ public class Line extends Shape {
             this.strokeColor = Color.valueOf(strokeColor);
             return this;
         }
-
-        double x1;
-        double y1;
-        double x2;
-        double y2;
-        Color fillColor;
-        Color strokeColor;
     }
 }

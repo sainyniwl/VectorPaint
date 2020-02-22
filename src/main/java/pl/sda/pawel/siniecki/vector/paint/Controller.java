@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -98,7 +99,7 @@ public class Controller {
 
     private void applyShape() {
         shapeList.add(currentShape);
-        //currentShape = null;
+        currentShape = null;
     }
 
     private void prepareShape() {
@@ -205,7 +206,9 @@ public class Controller {
             SDAFileReader reader = new SDAFileReader(file);
             shapeList = reader.readFile().stream()
                     .map(string -> factory.get(string))
+                    .filter(Objects::nonNull)
                     .collect(Collectors.toList());
         }
+        refreshCanvas();
     }
 }
