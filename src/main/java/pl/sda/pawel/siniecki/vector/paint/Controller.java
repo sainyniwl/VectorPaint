@@ -121,6 +121,8 @@ public class Controller {
                 return new Ellipse(startX, startY, endX, endY);
                 case CIRCLE:
                 return new Circle(startX, startY, endX, endY);
+            case STAR:
+                return new Star(startX, startY, endX, endY);
         }
     }
 

@@ -17,6 +17,8 @@ public class ShapeFactory {
                 return getTria(data);
             case "Ellipse":
                 return getElli(data);
+            case "Circle":
+                return getCircle(data);
         }
 
         return null;
@@ -109,7 +111,7 @@ public class ShapeFactory {
         String fillColor = data[5];
         String strokeColor = data[6];
 
-        return new Ellipse.Builder()
+        return new Circle.Builder()
                 .setX1(x1)
                 .setY1(y1)
                 .setX2(x2)
