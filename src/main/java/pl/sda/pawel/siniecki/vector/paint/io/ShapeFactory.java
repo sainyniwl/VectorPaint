@@ -1,9 +1,6 @@
 package pl.sda.pawel.siniecki.vector.paint.io;
 
-import pl.sda.pawel.siniecki.vector.paint.shapes.Line;
-import pl.sda.pawel.siniecki.vector.paint.shapes.Rectangle;
-import pl.sda.pawel.siniecki.vector.paint.shapes.Shape;
-import pl.sda.pawel.siniecki.vector.paint.shapes.Triangle;
+import pl.sda.pawel.siniecki.vector.paint.shapes.*;
 
 public class ShapeFactory {
     
@@ -18,6 +15,8 @@ public class ShapeFactory {
                 return getRect(data);
             case "Triangle":
                 return getTria(data);
+            case "Ellipse":
+                return getElli(data);
         }
 
         return null;
@@ -60,6 +59,7 @@ public class ShapeFactory {
                 .setStrokeColor(strokeColor)
                 .build();
     }
+
     private Shape getTria(String[] data) {
         //Triangle;142.0;84.0;311.0;84.0;226.5;72.0;0xffc0cbff;0xd2691eff;
         double x1 = Double.parseDouble(data[1]);
@@ -79,6 +79,25 @@ public class ShapeFactory {
                 .setStrokeColor(strokeColor);
 
         return builder.build();
+    }
+
+    private Shape getElli(String[] data) {
+
+        double x1 = Double.parseDouble(data[1]);
+        double y1 = Double.parseDouble(data[2]);
+        double x2 = Double.parseDouble(data[3]);
+        double y2 = Double.parseDouble(data[4]);
+        String fillColor = data[5];
+        String strokeColor = data[6];
+
+        return new Ellipse.Builder()
+                .setX1(x1)
+                .setY1(y1)
+                .setX2(x2)
+                .setY2(y2)
+                .setFillColor(fillColor)
+                .setStrokeColor(strokeColor)
+                .build();
     }
 
 }

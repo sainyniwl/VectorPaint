@@ -117,6 +117,8 @@ public class Controller {
                 return new Rectangle(startX, startY, endX, endY);
             case TRIANGLE:
                 return new Triangle(startX, startY, endX, endY);
+            case ELLIPSE:
+                return new Ellipse(startX, startY, endX, endY);
         }
     }
 
