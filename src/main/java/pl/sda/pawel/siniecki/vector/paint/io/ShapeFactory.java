@@ -100,4 +100,23 @@ public class ShapeFactory {
                 .build();
     }
 
+    private Shape getCircle(String[] data) {
+
+        double x1 = Double.parseDouble(data[1]);
+        double y1 = Double.parseDouble(data[2]);
+        double x2 = Double.parseDouble(data[3]);
+        double y2 = Double.parseDouble(data[4]);
+        String fillColor = data[5];
+        String strokeColor = data[6];
+
+        return new Ellipse.Builder()
+                .setX1(x1)
+                .setY1(y1)
+                .setX2(x2)
+                .setY2(y2)
+                .setFillColor(fillColor)
+                .setStrokeColor(strokeColor)
+                .build();
+    }
+
 }
