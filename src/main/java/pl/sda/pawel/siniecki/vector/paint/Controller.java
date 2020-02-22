@@ -9,7 +9,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import pl.sda.pawel.siniecki.vector.paint.shapes.*;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class Controller {
 
@@ -32,6 +41,8 @@ public class Controller {
     private double endX;
     private double endY;
 
+    private List<Shape> shapeList = new ArrayList<Shape>();
+
     private Shape currentShape;
     private Tool currentTool = Tool.LINE;
 
@@ -45,6 +56,7 @@ public class Controller {
 
         clear.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent actionEvent) {
+                shapeList.removeAll(shapeList);
                 GraphicsContext context = canvas.getGraphicsContext2D();
                 context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 context.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -65,6 +77,7 @@ public class Controller {
                 endY = mouseEvent.getY();
                 System.out.printf("Released x=%f y=%f \n", endX, endY);
                 prepareShape();
+                applyShape();
                 refreshCanvas();
             }
         });
@@ -78,6 +91,11 @@ public class Controller {
                 refreshCanvas();
             }
         });
+    }
+
+    private void applyShape() {
+        shapeList.add(currentShape);
+        //currentShape = null;
     }
 
     private void prepareShape() {
@@ -103,10 +121,15 @@ public class Controller {
 
         context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         context.setStroke(Color.BLACK);
+        context.setLineWidth(5);
         context.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
+        for (Shape shape : shapeList) {
+            shape.drawShape(context);
+        }
+
         if (currentShape != null) {
-            currentShape.draw(context);
+            currentShape.drawShape(context);
         }
     }
 
@@ -129,5 +152,37 @@ public class Controller {
             throw new IllegalStateException("Unsupported Tool");
         }
         System.out.println(currentTool);
+    }
+
+    @FXML
+    public void handleSave() {
+        Optional<String> reduce = shapeList.stream()
+                .map(shape -> shape.getData())
+                .reduce((acc, text) -> acc + "\n" + text);
+
+        if (reduce.isPresent()) {
+            System.out.println(reduce.get());
+            FileChooser fileChooser = new FileChooser();
+
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("YOLO files (*.yolo)", "*.yolo");
+            fileChooser.getExtensionFilters().add(extFilter);
+
+            File file = fileChooser.showSaveDialog(new Stage());
+
+            if (file != null) {
+                saveTextToFile(reduce.get(), file);
+            }
+        }
+    }
+
+    private void saveTextToFile(String content, File file) {
+        try {
+            PrintWriter writer;
+            writer = new PrintWriter(file);
+            writer.println(content);
+            writer.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }

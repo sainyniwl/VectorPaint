@@ -33,7 +33,7 @@
                <children>
                   <Button fx:id="clear" alignment="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="268.0" text="Clear" />
                   <Button fx:id="load" alignment="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="266.0" text="Load" />
-                  <Button fx:id="save" alignment="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="266.0" text="Save" />
+                  <Button fx:id="save" onAction="#handleSave" alignment="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="266.0" text="Save" />
                </children>
             </HBox>
          </top>

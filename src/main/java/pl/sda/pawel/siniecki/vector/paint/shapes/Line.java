@@ -17,8 +17,19 @@ public class Line extends Shape {
     }
 
     public void draw(GraphicsContext context) {
-        context.setStroke(getStrokeColor());
         context.strokeLine(x1, y1, x2, y2);
+    }
+
+    public String getData() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Line;");
+        builder.append(x1).append(";");
+        builder.append(y1).append(";");
+        builder.append(x2).append(";");
+        builder.append(x2).append(";");
+        builder.append(getFillColor()).append(";");
+        builder.append(getStrokeColor()).append(";");
+        return builder.toString();
     }
 
     public double getX1() {

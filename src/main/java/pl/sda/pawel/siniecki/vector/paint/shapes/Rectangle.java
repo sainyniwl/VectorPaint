@@ -16,9 +16,19 @@ public class Rectangle extends Shape {
         this.h = Math.abs(y1 - y2);
     }
 
+    public String getData() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Rectangle;");
+        builder.append(x).append(";");
+        builder.append(y).append(";");
+        builder.append(w).append(";");
+        builder.append(h).append(";");
+        builder.append(getFillColor()).append(";");
+        builder.append(getStrokeColor()).append(";");
+        return builder.toString();
+    }
+
     public void draw(GraphicsContext context) {
-        context.setStroke(getStrokeColor());
-        context.setFill(getFillColor());
         context.strokeRect(x, y, w, h);
         context.fillRect(x, y, w, h);
     }

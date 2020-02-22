@@ -15,10 +15,21 @@ public class Triangle extends Shape {
         this.point3 = new Point2D((x1 + x2) / 2, Math.min(y1, y2));
     }
 
-    public void draw(GraphicsContext context) {
-        context.setStroke(getStrokeColor());
-        context.setFill(getFillColor());
+    public String getData() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Triangle;");
+        builder.append(point1.getX()).append(";");
+        builder.append(point1.getY()).append(";");
+        builder.append(point2.getX()).append(";");
+        builder.append(point2.getY()).append(";");
+        builder.append(point3.getX()).append(";");
+        builder.append(point3.getY()).append(";");
+        builder.append(getFillColor()).append(";");
+        builder.append(getStrokeColor()).append(";");
+        return builder.toString();
+    }
 
+    public void draw(GraphicsContext context) {
         context.beginPath();
         context.moveTo(point1.getX(), point1.getY());
 

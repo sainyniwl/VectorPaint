@@ -9,7 +9,14 @@ public abstract class Shape {
     private Paint fillColor = Color.PINK;
     private Paint strokeColor = Color.BLACK;
 
+    public void drawShape(GraphicsContext context) {
+        context.setStroke(getStrokeColor());
+        context.setFill(getFillColor());
+        draw(context);
+    }
     public abstract void draw(GraphicsContext context);
+
+    public abstract String getData();
 
     public void setFillColor(Paint fillColor) {
         this.fillColor = fillColor;
