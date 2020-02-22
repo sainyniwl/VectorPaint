@@ -11,6 +11,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import pl.sda.pawel.siniecki.vector.paint.io.SDAFileReader;
+import pl.sda.pawel.siniecki.vector.paint.io.ShapeFactory;
 import pl.sda.pawel.siniecki.vector.paint.shapes.*;
 
 import java.io.File;
@@ -19,6 +21,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Controller {
 
@@ -157,7 +160,7 @@ public class Controller {
     @FXML
     public void handleSave() {
         Optional<String> reduce = shapeList.stream()
-                .map(shape -> shape.getData())
+                .map(Shape::getData)
                 .reduce((acc, text) -> acc + "\n" + text);
 
         if (reduce.isPresent()) {
@@ -172,6 +175,8 @@ public class Controller {
             if (file != null) {
                 saveTextToFile(reduce.get(), file);
             }
+        } else {
+            //TODO nie ma co zapisywać
         }
     }
 
@@ -183,6 +188,24 @@ public class Controller {
             writer.close();
         } catch (IOException ex) {
             ex.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void handleLoad() {
+        FileChooser fileChooser = new FileChooser();
+
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("YOLO files (*.yolo)", "*.yolo");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        File file = fileChooser.showOpenDialog(new Stage());
+
+        if(file != null) {
+            ShapeFactory factory = new ShapeFactory();
+            SDAFileReader reader = new SDAFileReader(file);
+            shapeList = reader.readFile().stream()
+                    .map(string -> factory.get(string))
+                    .collect(Collectors.toList());
         }
     }
 }
